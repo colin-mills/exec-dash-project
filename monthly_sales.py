@@ -7,9 +7,13 @@ import csv
 
 #declare variables
 time = ""
-dashes = "-----------------------"
+dashes = "------------------------------------"
 files = []
 totalSales = 0
+productsSet = {"first", "Second"}
+productsSet.clear()
+parallelPrices = []
+productSales = 0.0
 
 # TODO: write some Python code here to produce the desired functionality...
 
@@ -17,8 +21,11 @@ totalSales = 0
 #takes in file name as input 
 #csv_file_path = input("Please enter the csv file in the data dirrectory that you would like to be read") # a relative filepath
 #csv_file_path = "data/"+csv_file_path
-csv_file_path = "data/sales-201710.csv"
+csv_file_path = "data/sales-201803.csv"
 
+##########################
+####open and read file####
+##########################
 
 try:
 #reads file passed by user
@@ -34,11 +41,11 @@ try:
                 }
             totalSales = totalSales + (d["units_sold"] * d["sales_price"])
             files.append(d)
-            #print(d)
+            productsSet.add(d["product"])
 
 
+    #Parse date string to date object
     time = files[1]["date"]
-
     fileDate = datetime.datetime.fromisoformat(time) # strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
 
     ##################
@@ -54,11 +61,25 @@ try:
     ##################
     ###Output Sales###
     ##################
-    totalSales_USD = "${0:.2f}".format(totalSales)
+    totalSales_USD = "${0:,.2f}".format(totalSales)
     print(dashes)
     print("TOTAL MONTHLY SALES: " + totalSales_USD)
-    #
-    #print("-----------------------")
+    
+    
+    
+    #################
+    ###Top Selling###
+    #################
+    print(dashes)
+    for p in productsSet:
+        for item in files:
+            if p == item["product"]:
+                productSales = productSales + (item["units_sold"] * item["sales_price"])
+        parallelPrices.append(productSales)
+
+    print (productsSet)
+    print(parallelPrices)
+
     #print("TOP SELLING PRODUCTS:")
     #print("  1) Button-Down Shirt: $6,960.35")
     #print("  2) Super Soft Hoodie: $1,875.00")
@@ -67,6 +88,33 @@ try:
     #print("-----------------------")
     #print("VISUALIZING THE DATA...")
     #
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 except FileNotFoundError:
     print("\nCould not find selected file,\n Please ensure you have the correct name and try again...\n\n")

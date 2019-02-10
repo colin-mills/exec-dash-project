@@ -22,14 +22,13 @@ parallelPrices = []
 
 
 #takes in file name as input 
-#csv_file_path = input("Please enter the csv file in the data dirrectory that you would like to be read") # a relative filepath
-#csv_file_path = "data/"+csv_file_path
-csv_file_path = "data/sales-201710.csv"
+csv_file_path = input("Please enter the csv file in the data dirrectory that you would like to be read: ") # a relative filepath
+csv_file_path = "data/"+csv_file_path
+###csv_file_path = "data/sales-201710.csv"
 
 ##########################
 ####open and read file####
 ##########################
-
 try:
 #reads file passed by user
     with open(csv_file_path, "r") as csv_file: # "r" means "open the file for reading"
@@ -109,32 +108,6 @@ try:
     plt.ylabel("Sales in USD ($)")
     plt.xlabel("Products")
     plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 except FileNotFoundError:

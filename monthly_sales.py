@@ -8,6 +8,8 @@ import csv
 #declare variables
 time = ""
 dashes = "-----------------------"
+files = []
+totalSales = 0
 
 # TODO: write some Python code here to produce the desired functionality...
 
@@ -15,8 +17,8 @@ dashes = "-----------------------"
 #takes in file name as input 
 #csv_file_path = input("Please enter the csv file in the data dirrectory that you would like to be read") # a relative filepath
 #csv_file_path = "data/"+csv_file_path
-csv_file_path = "ata/sales-201710.csv"
-files = []
+csv_file_path = "data/sales-201710.csv"
+
 
 try:
 #reads file passed by user
@@ -30,6 +32,7 @@ try:
                 "units_sold" : int(row["units sold"]), 
                 "sales_price" : float(row["sales price"])
                 }
+            totalSales = totalSales + (d["units_sold"] * d["sales_price"])
             files.append(d)
             #print(d)
 
@@ -38,19 +41,22 @@ try:
 
     fileDate = datetime.datetime.fromisoformat(time) # strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
 
+    ##################
+    ###Date of file###
+    ##################
     print (dashes)
     print ("MONTH: " + str(fileDate.strftime("%B")) + " " + str(fileDate.year))
+    
+    
     print (dashes)
-
-
-    #print("-----------------------")
-    #print("MONTH: March 2018")
-    #
-    #print("-----------------------")
-    #print("CRUNCHING THE DATA...")
-    #
-    #print("-----------------------")
-    #print("TOTAL MONTHLY SALES: $12,000.71")
+    print("CRUNCHING THE DATA...")
+    
+    ##################
+    ###Output Sales###
+    ##################
+    totalSales_USD = "${0:.2f}".format(totalSales)
+    print(dashes)
+    print("TOTAL MONTHLY SALES: " + totalSales_USD)
     #
     #print("-----------------------")
     #print("TOP SELLING PRODUCTS:")
@@ -63,4 +69,4 @@ try:
     #
 
 except FileNotFoundError:
-    print("Please enter a correct file name")
+    print("\nCould not find selected file,\n Please ensure you have the correct name and try again...\n\n")

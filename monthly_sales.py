@@ -1,8 +1,10 @@
 # monthly_sales.py
 
 # TODO: import some modules and/or packages here
+import operator
 import datetime
 import csv
+import matplotlib.pyplot as plt
 
 
 #declare variables
@@ -67,11 +69,12 @@ try:
     print("TOTAL MONTHLY SALES: " + totalSales_USD)
     
     
-    
     #################
     ###Top Selling###
     #################
     print(dashes)
+
+    #loops through list of unique products and adds their corresponding sales prices
     productsList = list(productsSet)
     for p in productsList:
         productSales = 0
@@ -80,17 +83,13 @@ try:
                 productSales = productSales + item["sales_price"]
         parallelPrices.append({"product": p, "price": productSales})
 
-    print(parallelPrices)
+    #Sorts in accending order
+    parallelPrices = sorted(parallelPrices, key=operator.itemgetter("price"), reverse = True)
 
-    #(item["units_sold"] * 
-    #print("TOP SELLING PRODUCTS:")
-    #print("  1) Button-Down Shirt: $6,960.35")
-    #print("  2) Super Soft Hoodie: $1,875.00")
-    #print("  3) etc.")
-    #
-    #print("-----------------------")
-    #print("VISUALIZING THE DATA...")
-    #
+    for prod in parallelPrices:
+        ProductSales_USD = "${0:,.2f}".format(prod["price"])
+        print(prod["product"] + ": " + ProductSales_USD)
+
 
 
 

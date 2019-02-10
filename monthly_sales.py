@@ -66,7 +66,7 @@ try:
     ##################
     totalSales_USD = "${0:,.2f}".format(totalSales)
     print(dashes)
-    print("TOTAL MONTHLY SALES: " + totalSales_USD)
+    print("TOTAL MONTHLY SALES   : " + totalSales_USD.rjust(12))
     
     
     #################
@@ -88,7 +88,7 @@ try:
 
     for prod in parallelPrices:
         ProductSales_USD = "${0:,.2f}".format(prod["price"])
-        print(prod["product"] + ": " + ProductSales_USD)
+        print(prod["product"].ljust(22) + ": " + ProductSales_USD.rjust(12))
 
 
 

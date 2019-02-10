@@ -8,9 +8,10 @@ Second class project concerning reading CSV files and outputting relevant inform
 ## Instalation 
 
 First instal the package using Pip, if nescesary
-'''sh
+
+```sh
 pip install matplotlib
-'''
+```
 ## Usage
 
 Execute the "monthly_sales" program:

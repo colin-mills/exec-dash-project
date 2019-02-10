@@ -16,7 +16,7 @@ productsSet = {"first", "Second"}
 productsSet.clear()
 productsList = []
 parallelPrices = []
-productSales = 0.0
+
 
 # TODO: write some Python code here to produce the desired functionality...
 
@@ -24,7 +24,7 @@ productSales = 0.0
 #takes in file name as input 
 #csv_file_path = input("Please enter the csv file in the data dirrectory that you would like to be read") # a relative filepath
 #csv_file_path = "data/"+csv_file_path
-csv_file_path = "data/sales-201803.csv"
+csv_file_path = "data/sales-201710.csv"
 
 ##########################
 ####open and read file####
@@ -77,7 +77,7 @@ try:
     #loops through list of unique products and adds their corresponding sales prices
     productsList = list(productsSet)
     for p in productsList:
-        productSales = 0
+        productSales = 0.0
         for item in files:
             if p == item["product"]:
                 productSales = productSales + item["sales_price"]
@@ -86,10 +86,29 @@ try:
     #Sorts in accending order
     parallelPrices = sorted(parallelPrices, key=operator.itemgetter("price"), reverse = True)
 
+    #prints out each value in formatted order
     for prod in parallelPrices:
         ProductSales_USD = "${0:,.2f}".format(prod["price"])
         print(prod["product"].ljust(22) + ": " + ProductSales_USD.rjust(12))
 
+
+    ###################
+    #####Bar Graph#####
+    ###################
+    
+    input("When ready for graph press ENTER...\n(Please adjust window setting on graph for proper display)")
+
+    product = []
+    sales = []
+
+    for s in parallelPrices:
+         product.append(s["product"])
+         sales.append(s["price"])
+
+    plt.bar(product, sales)
+    plt.ylabel("Sales in USD ($)")
+    plt.xlabel("Products")
+    plt.show()
 
 
 

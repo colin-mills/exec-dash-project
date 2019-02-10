@@ -3,8 +3,8 @@
 # TODO: import some modules and/or packages here
 import datetime
 import csv
-
-time = datetime
+time = ""
+dashes = "-----------------------"
 
 # TODO: write some Python code here to produce the desired functionality...
 
@@ -36,8 +36,9 @@ time = files[1]["date"]
 
 fileDate = datetime.datetime.fromisoformat(time) # strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
 
+print (dashes)
 print ("MONTH: " + str(fileDate.strftime("%B")) + " " + str(fileDate.year))
-
+print (dashes)
 
 
 #print("-----------------------")

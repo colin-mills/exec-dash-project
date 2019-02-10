@@ -12,6 +12,7 @@ files = []
 totalSales = 0
 productsSet = {"first", "Second"}
 productsSet.clear()
+productsList = []
 parallelPrices = []
 productSales = 0.0
 
@@ -39,9 +40,9 @@ try:
                 "units_sold" : int(row["units sold"]), 
                 "sales_price" : float(row["sales price"])
                 }
-            totalSales = totalSales + (d["units_sold"] * d["sales_price"])
-            files.append(d)
+            totalSales = totalSales + d["sales_price"]
             productsSet.add(d["product"])
+            files.append(d)
 
 
     #Parse date string to date object
@@ -71,15 +72,17 @@ try:
     ###Top Selling###
     #################
     print(dashes)
-    for p in productsSet:
+    productsList = list(productsSet)
+    for p in productsList:
+        productSales = 0
         for item in files:
             if p == item["product"]:
-                productSales = productSales + (item["units_sold"] * item["sales_price"])
-        parallelPrices.append(productSales)
+                productSales = productSales + item["sales_price"]
+        parallelPrices.append({"product": p, "price": productSales})
 
-    print (productsSet)
     print(parallelPrices)
 
+    #(item["units_sold"] * 
     #print("TOP SELLING PRODUCTS:")
     #print("  1) Button-Down Shirt: $6,960.35")
     #print("  2) Super Soft Hoodie: $1,875.00")

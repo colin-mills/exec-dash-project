@@ -1,6 +1,7 @@
 # monthly_sales.py
 
 # TODO: import some modules and/or packages here
+import os
 import operator
 import datetime
 import csv
@@ -23,8 +24,10 @@ parallelPrices = []
 
 #takes in file name as input 
 csv_file_path = input("Please enter the csv file in the data dirrectory that you would like to be read: ") # a relative filepath
-csv_file_path = "data/"+csv_file_path
-###csv_file_path = "data/sales-201710.csv"
+csv_file_path = os.path.join(os.path.dirname(__file__), "data", csv_file_path)
+ 
+#csv_file_path = "data/"+csv_file_path
+#csv_file_path = "data/sales-201712.csv"
 
 ##########################
 ####open and read file####
@@ -95,20 +98,37 @@ try:
     #####Bar Graph#####
     ###################
     
-    input("When ready for graph press ENTER...\n(Please adjust window setting on graph for proper display)")
+    input("When ready for bar graph press ENTER...\n(Please adjust window setting on graph for proper display)")
 
     product = []
     sales = []
+    sizes = []
 
     for s in parallelPrices:
          product.append(s["product"])
          sales.append(s["price"])
+         sizes.append(s["price"]/totalSales)
+
 
     plt.bar(product, sales)
     plt.ylabel("Sales in USD ($)")
     plt.xlabel("Products")
     plt.show()
 
+    ###################
+    #####Pie Chart#####
+    ###################
+
+    input("When ready for pie chart press ENTER...\n(Please adjust window setting on graph for proper display)")
+
+    labels = product
+    sizes = sizes
+   
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=False, startangle=90)
+    ax1.axis("equal")
+   
+    plt.show()
 
 except FileNotFoundError:
     print("\nCould not find selected file,\n Please ensure you have the correct name and try again...\n\n")

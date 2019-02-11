@@ -111,6 +111,7 @@ try:
 
 
     plt.bar(product, sales)
+    plt.title("Bar Chart of Product Sales")
     plt.ylabel("Sales in USD ($)")
     plt.xlabel("Products")
     plt.show()
@@ -125,6 +126,7 @@ try:
     sizes = sizes
    
     fig1, ax1 = plt.subplots()
+    ax1.set_title("Pie Chart of Product Sales", loc="left")
     ax1.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=False, startangle=90)
     ax1.axis("equal")
    

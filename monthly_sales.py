@@ -26,8 +26,9 @@ parallelPrices = []
 csv_file_path = input("Please enter the csv file in the data dirrectory that you would like to be read: ") # a relative filepath
 csv_file_path = os.path.join(os.path.dirname(__file__), "data", csv_file_path)
  
-#csv_file_path = "data/"+csv_file_path
-#csv_file_path = "data/sales-201712.csv"
+#Citation: Used much of syntax and code samples from python notes in repository of georgetown-opim-243-201901
+# link: https://github.com/prof-rossetti/georgetown-opim-243-201901
+#
 
 ##########################
 ####open and read file####
@@ -132,6 +133,10 @@ try:
     ax1.axis("equal")
    
     plt.show()
+
+    #Citation: Used Matplotlib documentation for syntax as to how to use package
+    # link: https://matplotlib.org
+    #
 
 except FileNotFoundError:
     print("\nCould not find selected file,\n Please ensure you have the correct name and try again...\n\n")

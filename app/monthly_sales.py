@@ -5,6 +5,7 @@ import operator
 import datetime
 import csv
 import matplotlib.pyplot as plt
+from functions import to_USD
 
 
 #declare variables
@@ -17,13 +18,22 @@ productsSet.clear()
 productsList = []
 parallelPrices = []
 
-
-# TODO: write some Python code here to produce the desired functionality...
+def get_top_sellers(productList):
+    parallelPrices = []
+    for p in productList:
+        productSales = 0.0
+        for item in files:
+            if p == item["product"]:
+                productSales = productSales + item["sales_price"]
+        parallelPrices.append({"product": p, "price": productSales})
+    #Sorts in accending order
+    parallelPrices = sorted(parallelPrices, key=operator.itemgetter("price"), reverse = True)
+    return parallelPrices
 
 
 #takes in file name as input 
-csv_file_path = input("Please enter the csv file in the data dirrectory that you would like to be read: ") # a relative filepath
-csv_file_path = os.path.join(os.path.dirname(__file__), "data", csv_file_path)
+csv_file_path = input("Please enter the csv file in the data directory that you would like to be read in similar format to sales-201710.csv: ") # a relative filepath
+csv_file_path = os.path.join(os.path.dirname(__file__),"..", "data", csv_file_path)
  
 #Citation: Used much of syntax and code samples from python notes in repository of georgetown-opim-243-201901
 # link: https://github.com/prof-rossetti/georgetown-opim-243-201901
@@ -66,7 +76,7 @@ try:
     ##################
     ###Output Sales###
     ##################
-    totalSales_USD = "${0:,.2f}".format(totalSales)
+    totalSales_USD = to_USD(totalSales)
     print(dashes)
     print("TOTAL MONTHLY SALES   : " + totalSales_USD.rjust(12))
     
@@ -78,19 +88,22 @@ try:
 
     #loops through list of unique products and adds their corresponding sales prices
     productsList = list(productsSet)
-    for p in productsList:
-        productSales = 0.0
-        for item in files:
-            if p == item["product"]:
-                productSales = productSales + item["sales_price"]
-        parallelPrices.append({"product": p, "price": productSales})
 
+    #for p in productsList:
+    #    productSales = 0.0
+    #    for item in files:
+    #        if p == item["product"]:
+    #            productSales = productSales + item["sales_price"]
+    #    parallelPrices.append({"product": p, "price": productSales})
+#
     #Sorts in accending order
-    parallelPrices = sorted(parallelPrices, key=operator.itemgetter("price"), reverse = True)
+    parallelPrices = get_top_sellers(productsList) #sorted(parallelPrices, key=operator.itemgetter("price"), reverse = True)
+
+
 
     #prints out each value in formatted order
     for prod in parallelPrices:
-        ProductSales_USD = "${0:,.2f}".format(prod["price"])
+        ProductSales_USD = to_USD(prod["price"])
         print(prod["product"].ljust(22) + ": " + ProductSales_USD.rjust(12))
 
 
@@ -114,7 +127,7 @@ try:
     plt.title("Bar Chart of Product Sales")
     plt.ylabel("Sales in USD ($)")
     plt.xlabel("Products")
-    plt.show()
+    #plt.show()
 
     ###################
     #####Pie Chart#####
@@ -131,7 +144,7 @@ try:
     ax1.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=False, startangle=90)
     ax1.axis("equal")
    
-    plt.show()
+    #plt.show()
 
     #Citation: Used Matplotlib documentation for syntax as to how to use package
     # link: https://matplotlib.org

@@ -7,7 +7,7 @@ Second class project concerning reading CSV files and outputting relevant inform
 
 ## Instalation 
 1. Clone or download this directory
-2. instal the packages from within a virtual environment using:
+2. install the packages once within a virtual environment using:
 
 ```sh
 pip install -r requirements.txt
@@ -21,7 +21,7 @@ python monthly_sales.py
 ```
 ## Testing
 
-run tests on the functions:
+run a test:
 
 ```sh
 pytest

@@ -16,6 +16,11 @@ productsSet.clear()
 productsList = []
 parallelPrices = []
 
+#variables that will be used in charts
+product = []
+sales = []
+sizes = []
+
 
 #takes in file name as input 
 csv_file_path = input("Please enter the csv file in the data directory that you would like to be read.\nEnter in format similar format to \"sales-YYYYMM.csv:\" ") # a relative filepath
@@ -76,42 +81,36 @@ try:
         ProductSales_USD = to_USD(prod["price"])
         print(prod["product"].ljust(22) + ": " + ProductSales_USD.rjust(12))
 
+        #also append lists for bar chart
+        product.append(prod["product"])
+        sales.append(prod["price"])
+        sizes.append(prod["price"]/totalSales)
+
     ###################
     #####Bar Graph#####
     ###################
     input("When ready for bar graph press ENTER...\n(Please adjust window setting on graph for proper display)")
 
-    product = []
-    sales = []
-    sizes = []
-
-    for s in parallelPrices:
-         product.append(s["product"])
-         sales.append(s["price"])
-         sizes.append(s["price"]/totalSales)
-
+    #initialize graph aspects
     plt.bar(product, sales)
     plt.rcParams.update({'font.size': 10})
     plt.title("Bar Chart of Product Sales")
     plt.ylabel("Sales in USD ($)")
     plt.xlabel("Products")
-    #plt.show()
+    plt.show()
 
     ###################
     #####Pie Chart#####
     ###################
     input("When ready for pie chart press ENTER...\n(Please adjust window setting on graph for proper display)")
-
-    labels = product
-    sizes = sizes
    
+    #initialize pie chart aspects
     fig1, ax1 = plt.subplots()
     plt.rcParams.update({'font.size': 10})
     ax1.set_title("Pie Chart of Product Sales", loc="left")
-    ax1.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=False, startangle=90)
+    ax1.pie(sizes, labels=product, autopct='%1.1f%%', shadow=False, startangle=90)
     ax1.axis("equal")
-   
-    #plt.show()
+    plt.show()
 
     #Citation: Used Matplotlib documentation for syntax as to how to use package
     # link: https://matplotlib.org

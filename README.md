@@ -3,8 +3,8 @@ Second class project concerning reading CSV files and outputting relevant inform
 
 ### Prerequisites
 
-Python 3.7.
-Pip
+* Python 3.7.
+* Pip
 
 ## Instalation 
 1. Clone or download this directory

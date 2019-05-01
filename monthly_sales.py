@@ -1,6 +1,5 @@
 # monthly_sales.py
 
-# TODO: import some modules and/or packages here
 import os
 import operator
 import datetime

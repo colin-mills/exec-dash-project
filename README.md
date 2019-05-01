@@ -6,11 +6,11 @@ Second class project concerning reading CSV files and outputting relevant inform
 **Requires Python 3.7.**
 
 ## Instalation 
-
-First instal the package using Pip, if nescesary
+1. Clone or download this directory
+2. instal the packages from within a virtual environment using:
 
 ```sh
-pip install matplotlib
+pip install -r requirements.txt
 ```
 ## Usage
 
@@ -18,4 +18,11 @@ Execute the "monthly_sales" program:
 
 ```sh
 python monthly_sales.py
+```
+## Testing
+
+run tests on the functions:
+
+```sh
+pytest
 ```

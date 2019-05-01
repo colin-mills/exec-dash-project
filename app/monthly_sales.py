@@ -1,11 +1,9 @@
 # monthly_sales.py
-
 import os
-import operator
 import datetime
 import csv
 import matplotlib.pyplot as plt
-from functions import to_USD
+from functions import to_USD, get_top_sellers
 
 
 #declare variables
@@ -18,21 +16,9 @@ productsSet.clear()
 productsList = []
 parallelPrices = []
 
-def get_top_sellers(productList):
-    parallelPrices = []
-    for p in productList:
-        productSales = 0.0
-        for item in files:
-            if p == item["product"]:
-                productSales = productSales + item["sales_price"]
-        parallelPrices.append({"product": p, "price": productSales})
-    #Sorts in accending order
-    parallelPrices = sorted(parallelPrices, key=operator.itemgetter("price"), reverse = True)
-    return parallelPrices
-
 
 #takes in file name as input 
-csv_file_path = input("Please enter the csv file in the data directory that you would like to be read in similar format to sales-201710.csv: ") # a relative filepath
+csv_file_path = input("Please enter the csv file in the data directory that you would like to be read.\nEnter in format similar format to \"sales-YYYYMM.csv:\" ") # a relative filepath
 csv_file_path = os.path.join(os.path.dirname(__file__),"..", "data", csv_file_path)
  
 #Citation: Used much of syntax and code samples from python notes in repository of georgetown-opim-243-201901
@@ -43,7 +29,7 @@ csv_file_path = os.path.join(os.path.dirname(__file__),"..", "data", csv_file_pa
 ####open and read file####
 ##########################
 try:
-#reads file passed by user
+    #reads file passed by user
     with open(csv_file_path, "r") as csv_file: # "r" means "open the file for reading"
         reader = csv.DictReader(csv_file) # assuming your CSV has headers
         for row in reader:
@@ -61,15 +47,13 @@ try:
 
     #Parse date string to date object
     time = files[1]["date"]
-    fileDate = datetime.datetime.fromisoformat(time) # strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
+    fileDate = datetime.datetime.fromisoformat(time)
 
     ##################
     ###Date of file###
     ##################
     print (dashes)
     print ("MONTH: " + str(fileDate.strftime("%B")) + " " + str(fileDate.year))
-    
-    
     print (dashes)
     print("CRUNCHING THE DATA...")
     
@@ -80,32 +64,17 @@ try:
     print(dashes)
     print("TOTAL MONTHLY SALES   : " + totalSales_USD.rjust(12))
     
-    
     #################
     ###Top Selling###
     #################
     print(dashes)
-
-    #loops through list of unique products and adds their corresponding sales prices
-    productsList = list(productsSet)
-
-    #for p in productsList:
-    #    productSales = 0.0
-    #    for item in files:
-    #        if p == item["product"]:
-    #            productSales = productSales + item["sales_price"]
-    #    parallelPrices.append({"product": p, "price": productSales})
-#
-    #Sorts in accending order
-    parallelPrices = get_top_sellers(productsList) #sorted(parallelPrices, key=operator.itemgetter("price"), reverse = True)
-
-
+    productsList = list(productsSet) #eliminates duplicates
+    parallelPrices = get_top_sellers(productsList, files) #gets top sellers in accending order
 
     #prints out each value in formatted order
     for prod in parallelPrices:
         ProductSales_USD = to_USD(prod["price"])
         print(prod["product"].ljust(22) + ": " + ProductSales_USD.rjust(12))
-
 
     ###################
     #####Bar Graph#####
@@ -121,7 +90,6 @@ try:
          sales.append(s["price"])
          sizes.append(s["price"]/totalSales)
 
-
     plt.bar(product, sales)
     plt.rcParams.update({'font.size': 10})
     plt.title("Bar Chart of Product Sales")
@@ -132,7 +100,6 @@ try:
     ###################
     #####Pie Chart#####
     ###################
-
     input("When ready for pie chart press ENTER...\n(Please adjust window setting on graph for proper display)")
 
     labels = product

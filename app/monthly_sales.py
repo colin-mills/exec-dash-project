@@ -65,9 +65,8 @@ try:
     ##################
     ###Output Sales###
     ##################
-    totalSales_USD = to_USD(totalSales)
     print(dashes)
-    print("TOTAL MONTHLY SALES   : " + totalSales_USD.rjust(12))
+    print("TOTAL MONTHLY SALES   : " + to_USD(totalSales).rjust(12))
     
     #################
     ###Top Selling###
@@ -78,8 +77,7 @@ try:
 
     #prints out each value in formatted order
     for prod in parallelPrices:
-        ProductSales_USD = to_USD(prod["price"])
-        print(prod["product"].ljust(22) + ": " + ProductSales_USD.rjust(12))
+        print(prod["product"].ljust(22) + ": " + to_USD(prod["price"]).rjust(12))
 
         #also append lists for bar chart
         product.append(prod["product"])
